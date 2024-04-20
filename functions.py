@@ -12,7 +12,6 @@ from pathlib import Path
 from datetime import datetime
 import hashlib
 import base64
-import pathlib
 
 DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
@@ -33,7 +32,7 @@ def get_directory_file_set(dir_path, files_only, filters = None):
         for path in glob.glob(os.path.join(dir_path, f)):
             if files_only:
                 if os.path.isfile(path):
-                    if type(path) is pathlib.PosixPath:
+                    if isinstance(path, Path):
                         path = path.absolute().as_posix()
                     file_path_set.add(path)
             else:
@@ -58,7 +57,7 @@ def get_directory_file_set_recursive(root_dir_path, files_only, filters = None):
         for path in Path(root_dir_path).glob('**/{}'.format(f)):
             if files_only:
                 if os.path.isfile(path):
-                    if type(path) is pathlib.PosixPath:
+                    if isinstance(path, Path):
                         path = path.absolute().as_posix()
                     file_path_set.add(path)
             else:
